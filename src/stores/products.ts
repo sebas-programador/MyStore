@@ -3,34 +3,49 @@ import { ref} from 'vue'
 
 import { api } from "@/services/api";
 import { IProduct } from "@/interfaces/products";
+import { MProduct } from "@/modes/products";
 
 export const useProductsStore = defineStore('products', () => {
 
     const products = ref<IProduct[]>([])
-    const loading = ref(false)
     async function getProducts() {
         try {
-            loading.value = true
             const response = await api('/products')
-            console.log('response', response)
 
-            if (response.status === 200) {
-                products.value = response.data
-                console.log('products: ', products.value)
-            } else {
+            if (response.status !== 200) {
                 products.value = []
+                return
             }
+
+            products.value = response.data
         } catch (error) {
             console.error('Error: ', error)
             products.value = []
+        }
+    }
 
-        } finally {
-            loading.value = false
+    const product = ref<IProduct>({...MProduct})
+    async function getProductDetail(id: number) {
+        try {
+            const response = await api(`/products/${id}`)
+
+            if (response.status !== 200) {
+                product.value = {...MProduct}
+                return
+            } 
+
+            product.value = response.data
+        } catch (error) {
+            console.error('Error: ', error)
+            product.value = {...MProduct}
         }
     }
 
     return {
         products,
-        getProducts
+        getProducts,
+
+        product,
+        getProductDetail
     }
 })
