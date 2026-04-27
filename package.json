@@ -41,5 +41,5 @@
     "vitest": "^0.34.6",
     "vue-tsc": "^2.1.10"
   },
-  "description": "An Ionic project"
+  "description": "Product store, list and display details of each product"
 }
