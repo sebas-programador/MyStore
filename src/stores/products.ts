@@ -8,6 +8,9 @@ import { MProduct } from "@/modes/products";
 export const useProductsStore = defineStore('products', () => {
 
     const products = ref<IProduct[]>([])
+    const page = ref(1)
+    const rowsPerPage = ref(6)
+    const limit = ref(0)
     async function getProducts() {
         try {
             const response = await api('/products')
@@ -18,6 +21,7 @@ export const useProductsStore = defineStore('products', () => {
             }
 
             products.value = response.data
+            limit.value = products.value.length / rowsPerPage.value
         } catch (error) {
             console.error('Error: ', error)
             products.value = []
@@ -41,11 +45,32 @@ export const useProductsStore = defineStore('products', () => {
         }
     }
 
+    function cleanProduct() {
+        product.value = {...MProduct}
+    }
+
+    const favoriteProducts = ref<IProduct[]>([])
+    function addProductToFavorites(product: IProduct) {
+        favoriteProducts.value.push(product)
+    }
+
+    function cleanFavoriteProducts() {
+        favoriteProducts.value = [] 
+    }
+
     return {
         products,
+        page,
+        rowsPerPage,
+        limit,
         getProducts,
 
         product,
-        getProductDetail
+        getProductDetail,
+        cleanProduct,
+
+        favoriteProducts,
+        addProductToFavorites,
+        cleanFavoriteProducts,
     }
 })

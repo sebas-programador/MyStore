@@ -1,0 +1,12 @@
+export function useCurrency() {
+    const formatCurrency = (value: number, locale = 'en-US', currency = 'USD') => {
+        return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency
+        }).format(value)
+    }
+
+    return {
+        formatCurrency
+    }
+}
