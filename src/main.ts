@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import {initStorage} from './services/storage';
 
 import { IonicVue } from '@ionic/vue';
 import { createPinia } from 'pinia';
@@ -43,3 +44,5 @@ const app = createApp(App)
 router.isReady().then(() => {
   app.mount('#app');
 });
+
+initStorage()

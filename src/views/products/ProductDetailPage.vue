@@ -25,8 +25,8 @@
                     </ion-col>
 
                     <ion-col size="2" class="ion-text-center">
-                        <ion-button fill="clear" shape="round" @click="handleAddProductToFavorites">
-                            <ion-icon slot="icon-only" size="large" :icon="heartOutline"></ion-icon>
+                        <ion-button fill="clear" shape="round" @click="handleToggleFavorite">
+                            <ion-icon slot="icon-only" size="large" :icon="isFavorite ? heart : heartOutline"></ion-icon>
                         </ion-button>
                     </ion-col>
                 </ion-row>
@@ -56,22 +56,28 @@
 
 <script setup lang="ts">
 import { IonPage, IonGrid, IonRow, IonCol, IonContent, IonButton, IonIcon, IonText, IonToast } from '@ionic/vue'
-import {arrowBackOutline, heartOutline} from 'ionicons/icons'
+import {arrowBackOutline, heartOutline, heart} from 'ionicons/icons'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useProductsStore } from '@/stores/products'
+import { useFavoritesStore } from '@/stores/favorites'
 import TheHeader from '@/components/TheHeader.vue'
 import { useCurrency } from '@/composables/useCurrency'
 
 const route = useRoute()
 const productsStore = useProductsStore()
+const favoritesStore = useFavoritesStore()
 const { formatCurrency } = useCurrency()
 const isOpen = ref(false);
 
 const product = computed(() => {
     return productsStore.product
 })
+
+const isFavorite = computed(() =>
+  favoritesStore.isFavorite(product.value?.id)
+)
 
 onMounted(() => {
     const { id } = route.params
@@ -82,8 +88,13 @@ onUnmounted(() => {
     productsStore.cleanProduct()
 })
 
-function handleAddProductToFavorites() {
-    productsStore.addProductToFavorites(product.value)
+async function handleToggleFavorite() {
+    if(isFavorite.value) {
+        await favoritesStore.removeFavorite(product.value.id)
+        return
+    }
+
+    await favoritesStore.addProductToFavorites(product.value)
     setOpen(true)
 }
 
