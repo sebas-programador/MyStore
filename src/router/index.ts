@@ -22,7 +22,18 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/products/ProductDetailPage.vue')
       }
     ]
-  }
+  },
+
+  {
+    path: '/favoritos/',
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/products/FavoritesPage.vue')
+      }
+    ]
+  },
 ]
 
 const router = createRouter({

@@ -2,7 +2,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button shape="round" @click="handleGoToFavorites">
+          <ion-button shape="round" router-link="/favoritos" >
             <ion-icon slot="icon-only" :icon="heartOutline"></ion-icon>
           </ion-button>
          </ion-buttons>
@@ -13,8 +13,4 @@
 <script setup lang="ts">
 import { IonHeader, IonToolbar, IonButtons, IonButton, IonIcon } from '@ionic/vue';
 import {heartOutline} from 'ionicons/icons'
-
-function handleGoToFavorites() {
-  //
-}
 </script>

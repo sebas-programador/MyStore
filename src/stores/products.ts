@@ -49,15 +49,6 @@ export const useProductsStore = defineStore('products', () => {
         product.value = {...MProduct}
     }
 
-    const favoriteProducts = ref<IProduct[]>([])
-    function addProductToFavorites(product: IProduct) {
-        favoriteProducts.value.push(product)
-    }
-
-    function cleanFavoriteProducts() {
-        favoriteProducts.value = [] 
-    }
-
     return {
         products,
         page,
@@ -67,10 +58,6 @@ export const useProductsStore = defineStore('products', () => {
 
         product,
         getProductDetail,
-        cleanProduct,
-
-        favoriteProducts,
-        addProductToFavorites,
-        cleanFavoriteProducts,
+        cleanProduct
     }
 })
