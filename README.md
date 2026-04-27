@@ -57,4 +57,4 @@ Las principales librerias que utiliza el proyecto son:
 
 |     | Nombre              | GitHub                                                          |
 | --- | ------------------- | --------------------------------------------------------------- |
-| 2   | Juan S. Orrego Z.   | [juorregocomodisimos](https://github.com/juorregocomodisimos)   |
+| 2   | Juan S. Orrego Z.   | [sebas-programador](https://github.com/sebas-programador)   |
